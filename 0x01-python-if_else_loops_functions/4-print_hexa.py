@@ -1,2 +1,3 @@
-for i in range(0, 99):
-    print(f"{i} = 0 x{i:02x}")
+#!/usr/bin/python3
+for ch in range(0, 99):
+    print("{} = {}".format(ch, hex(ch)))
