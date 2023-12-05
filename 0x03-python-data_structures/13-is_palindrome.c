@@ -3,51 +3,61 @@
 #include <stdio.h>
 
 /**
-*add_nodeint - function to add a new node
-*@head: head pointer of listint_t
-*@n: int to add in listint_t list
-*Return: address of the new element, or NULL if it failed
+* reverse_listint - Function to reverse a linked list in place
+* @head: Pointer to the head of the list
+* Return: Pointer to the new head of the reversed list
 */
-listint_t *add_nodeint(listint_t **head, const int n)
+listint_t *reverse_listint(listint_t *head)
 {
-	listint_t *new;
+	listint_t *prev = NULL, *current = head, *next;
 
-	new = malloc(sizeof(listint_t));
-	if (new == NULL)
-		return (NULL);
-	new->n = n;
-	new->next = *head;
-	*head = new;
-	return (new);
+	while (current != NULL)
+	{
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+
+	return (prev);
 }
+
 /**
-*is_palindrome - Function to check if singly linked list is palindrome
-*@head: head pointer of listint_t
-*Return: 1 if it is palindrome else 0
+* is_palindrome - Function to check if singly linked list is palindrome
+* @head: Pointer to the head of the list
+* Return: 1 if it is palindrome else 0
 */
 int is_palindrome(listint_t **head)
 {
-	listint_t *head2 = *head;
-	listint_t *aux = NULL, *aux2 = NULL;
+	listint_t *slow = *head, *fast = *head, *prev_slow = *head;
+	listint_t *second_half, *reversed_second_half;
 
-	if (*head == NULL || head2->next == NULL)
+	if (*head == NULL || (*head)->next == NULL)
 		return (1);
-	while (head2 != NULL)
+
+	while (fast != NULL && fast->next != NULL)
 	{
-		add_nodeint(&aux, head2->n);
-		head2 = head2->next;
+		fast = fast->next->next;
+		prev_slow = slow;
+		slow = slow->next;
 	}
-	aux2 = aux;
-	while (*head != NULL)
+
+	if (fast != NULL)
+		slow = slow->next;
+
+	second_half = slow;
+	reversed_second_half = reverse_listint(second_half);
+
+	while (reversed_second_half != NULL)
 	{
-		if ((*head)->n != aux2->n)
-		{
-			free_listint(aux);
+		if ((*head)->n != reversed_second_half->n)
 			return (0);
-		}
+
 		*head = (*head)->next;
-		aux2 = aux2->next;
+		reversed_second_half = reversed_second_half->next;
 	}
-	free_listint(aux);
+
+	prev_slow->next = reverse_listint(second_half);
+
 	return (1);
 }
