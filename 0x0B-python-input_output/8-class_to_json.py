@@ -5,11 +5,13 @@
 
 def class_to_json(obj):
     """
-    A function that returns the dictionary description with a simple data structure
-    (list, dictionary, string, integer, and boolean) for JSON serialization of an object.
+    A function that returns the dictionary description with a
+    simple data structure
+    (list, dictionary, string, integer, and boolean)
+    for JSON serialization of an object.
     """
     if not hasattr(obj, "__dict__"):
-        raise TypeError(f"{obj} is not serializable. Ensure it is an instance of a class.")
+        raise TypeError(f"{obj} is not serializable.")
 
     serializable_attributes = {}
     for key, value in obj.__dict__.items():
