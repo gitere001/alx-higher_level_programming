@@ -1,11 +1,19 @@
 #!/usr/bin/python3
 
-"""A module contain class_to_json(obj):"""
+"""A module containing class_to_json(obj)"""
 
 
 def class_to_json(obj):
     """
-    a function that returns the dictionary description with simple data structure
-    (list, dictionary, string, integer and boolean) for JSON serialization of an object:
+    A function that returns the dictionary description with a simple data structure
+    (list, dictionary, string, integer, and boolean) for JSON serialization of an object.
     """
-    return obj.__dict__
+    if not hasattr(obj, "__dict__"):
+        raise TypeError(f"{obj} is not serializable. Ensure it is an instance of a class.")
+
+    serializable_attributes = {}
+    for key, value in obj.__dict__.items():
+        if isinstance(value, (list, dict, str, int, bool)):
+            serializable_attributes[key] = value
+
+    return serializable_attributes
