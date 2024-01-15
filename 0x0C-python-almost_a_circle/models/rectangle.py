@@ -2,7 +2,7 @@
 
 """ A module having a class Rectangle that inherit from Base module"""
 
-from .base import Base
+from models.base import Base
 
 
 class Rectangle(Base):
@@ -73,3 +73,48 @@ class Rectangle(Base):
             raise ValueError("y must be >= 0")
         else:
             self.__y = value
+
+    def area(self):
+        """A function that returns area of a rectangle"""
+        return self.__width * self.__height
+
+    def display(self):
+        """Prints in stdout the Rectangle instance with the character #,
+        taking into account x and y."""
+        for _ in range(self.__y):
+            print()
+        for _ in range(self.__height):
+            print(' ' * self.__x + '#' * self.__width)
+
+    def __str__(self):
+        """returns [Rectangle] (<id>) <x>/<y> - <width>/<height>"""
+        return (f"[Rectangle] ({self.id}) "
+                f"{self.__x}/{self.__y} - {self.__width}/{self.__height}"
+                )
+
+    def update(self, *args, **kwargs):
+        '''
+            Updates the arguments in the class
+        '''
+        if len(args) == 0:
+            for key, val in kwargs.items():
+                self.__setattr__(key, val)
+            return
+        try:
+            self.id = args[0]
+            self.width = args[1]
+            self.height = args[2]
+            self.x = args[3]
+            self.y = args[4]
+        except IndexError:
+            pass
+
+    def to_dictionary(self):
+        """returns the dictionary representation of a Rectangle"""
+        return {
+            "x": self.x,
+            "width": self.width,
+            "id": self.id,
+            "height": self.height,
+            "y": self.y
+        }
