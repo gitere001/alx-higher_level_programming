@@ -1,0 +1,7 @@
+.eslintrc.js
+node_modules/
+package-lock.json
+package.json
+../Rectangle.json
+../Square.json
+../0x0C-python-almost_a_circle/tests/test_rectangle.py
