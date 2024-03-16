@@ -12,6 +12,7 @@ from sys import argv
 if __name__ == "__main__":
     db_connection = (f"mysql+mysqldb://{argv[1]}:{argv[2]}"
                      f"@localhost:3306/{argv[3]}")
+
     engine = create_engine(db_connection)
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -19,5 +20,5 @@ if __name__ == "__main__":
     result = session.query(City, State).join(State)
     for city, state in result.all():
         print(f"{state.name}: {city.id} {city.name}")
-
+    session.commit()
     session.close()
