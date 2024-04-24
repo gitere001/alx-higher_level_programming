@@ -1,0 +1,8 @@
+eslint.config.mjs
+node_modules/
+package-lock.json
+package.json
+../Rectangle.json
+../Square.json
+../__pycache__/
+../my_urllib.py
